@@ -1,12 +1,12 @@
 import Header from "../components/Header/Header";
-import SearchBar from "../components/SearchBar/SearchBar";
 
 const Home = () => {
   return (
     <div>
       <Header />
-      <Filter />
-      <SearchBar />
+      <Filters />
+      <PokemonGrid />
+      <Footer />
     </div>
   );
 };
