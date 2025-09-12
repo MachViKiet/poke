@@ -1,4 +1,6 @@
-function Theme(){
+const Theme = () => {
+
 }
+
 
 export default Theme;

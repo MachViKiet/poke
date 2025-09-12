@@ -1,4 +1,6 @@
-function PokemonCard(){
+const PokemonCard = () => {
+
 }
+
 
 export default PokemonCard;

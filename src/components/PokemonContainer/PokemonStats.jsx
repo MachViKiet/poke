@@ -1,4 +1,6 @@
-function PokemonStats(){
+const PokemonStats = () => {
+
 }
+
 
 export default PokemonStats;
