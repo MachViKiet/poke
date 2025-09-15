@@ -15,7 +15,6 @@ const GithubIconDark = (props) => (
   </svg>
 );
 
-// Cole o código do seu SVG claro (branco) aqui.
 const GithubIconLight = (props) => (
   <svg
     {...props}
