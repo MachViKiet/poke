@@ -1,0 +1,39 @@
+.themeSwitchContainer {
+  position: relative;
+  width: 50px;
+  height: 26px;
+}
+
+.themeSwitchCheckbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switchLabel {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--theme-switch-bg);
+  transition: 0.4s;
+  border-radius: 26px;
+}
+
+.switchLabel::before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--theme-thumb-bg);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.themeSwitchCheckbox:checked + .switchLabel::before {
+  transform: translateX(24px);
+}
