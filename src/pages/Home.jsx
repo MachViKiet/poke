@@ -1,39 +1,26 @@
-import { useState, useMemo } from "react";
-import Header from "../components/Header/Header";
 import Filters from "../components/Filters/Filters";
-import PokemonGrid from "../components/PokemonContainer/PokemonGrid";
-import Footer from "../components/Footer/Footer";
-
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+import Header from "../components/Header/Header";
+import PokemonGrid from "../components/PokemonContainer/Grid";
+import Footer from "../components/Footer/Footer"
+import styles from "./Home.module.css"
+import useRegions from '../hooks/useRegions'
+import useTypes from "../hooks/useTypes"
+import useFilters from "../hooks/useFilters"
 
 const Home = () => {
-  const [mode, setMode] = useState("light");
 
-  const toggleTheme = () => {
-    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-  };
+  const { filters, setFilters } = useFilters();
+  const { regions } = useRegions();
+  const { types } = useTypes();
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
-  );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div>
-        <Header themeMode={mode} toggleTheme={toggleTheme} />
-        <Filters />
-        <PokemonGrid />
-        <Footer />
-      </div>
-    </ThemeProvider>
+    <div className={styles.appContainer}>
+      <Header />
+      <Filters filters={filters} setFilters={setFilters} regions={regions} types={types} />
+      <PokemonGrid filters={filters} />
+      <Footer />
+    </div>
   );
 };
 

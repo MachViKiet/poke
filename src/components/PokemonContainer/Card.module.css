@@ -1,0 +1,174 @@
+.pokemonCard {
+  background: linear-gradient(
+    180deg,
+    var(--c1, #e9eff9),
+    var(--c2, #e7d9ff) 100%
+  );
+  min-width: 200px;
+  height: 250px;
+  margin: 1.25rem 0.75rem;
+  padding: 1.25rem 0;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
+  box-shadow: 0 1.6px 1.6px rgba(0, 0, 0, 0.023),
+    0 3.8px 3.8px rgba(0, 0, 0, 0.034), 0 6.9px 6.9px rgba(0, 0, 0, 0.041),
+    0 11.4px 11.4px rgba(0, 0, 0, 0.049), 0 18.8px 18.8px rgba(0, 0, 0, 0.056),
+    0 32.8px 32.8px rgba(0, 0, 0, 0.067), 0 71px 71px rgba(0, 0, 0, 0.09);
+  border-radius: 1rem;
+
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  will-change: transform;
+  transform-origin: center;
+  overflow: visible;
+}
+
+.pokemonCard:hover,
+.pokemonCard:focus-within {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 16px 48px rgba(0, 0, 0, 0.18);
+  z-index: 2;
+}
+
+.pokemonCard:active {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+}
+
+.typesContainer h3 {
+  font-family: "Press Start 2P", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.cardNumber {
+  padding-left: 10px;
+  margin-left: 5px;
+  font-family: "Teko", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  display: flex;
+  align-items: center;
+}
+
+.cardNumber p {
+    font-size: 1.75rem;
+    margin: 0;
+}
+
+.pokemonIcon {
+  display: flex;
+  align-items: center;
+}
+
+.pokemonIcon svg {
+  width: 35px;
+  color: beige;
+  margin-right: 10px;
+}
+
+.pokemonIcon svg:hover {
+  color: rgba(242, 140, 140, 0.969);
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.pokemonImage {
+  width: 90px;
+  height: 90px;
+}
+
+.typeImage {
+  width: 32px;
+}
+
+.typesContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.cardTypes {
+  display: flex;
+  gap: 20px;
+}
+
+.typeBadge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #fff8;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.grass {
+  background: radial-gradient(circle, #496047, #46d38c);
+}
+.fire {
+  background: radial-gradient(circle, #ffb56b, #ee8130);
+}
+.water {
+  background: radial-gradient(circle, #a4bdf8, #6390f0);
+}
+.poison {
+  background: radial-gradient(circle, #c77dda, #a33ea1);
+}
+
+.normal {
+  background: radial-gradient(circle, #d9dec4, #a8a77a);
+}
+.flying {
+  background: radial-gradient(circle, #c1b5f9, #a98ff3);
+}
+.fighting {
+  background: radial-gradient(circle, #f29c92, #c22e28);
+}
+.electric {
+  background: radial-gradient(circle, #c9bc85, #f7d02c);
+}
+
+.ground {
+  background: radial-gradient(circle, #f1dca3, #e2bf65);
+}
+.psychic {
+  background: radial-gradient(circle, #ffa0bc, #f95587);
+}
+.bug {
+  background: radial-gradient(circle, #cde36b, #a6b91a);
+}
+.rock {
+  background: radial-gradient(circle, #d1c48a, #b6a136);
+}
+
+.ghost {
+  background: radial-gradient(circle, #a293c7, #735797);
+}
+.dark {
+  background: radial-gradient(circle, #b69e8d, #705746);
+}
+.dragon {
+  background: radial-gradient(circle, #a58afd, #6f35fc);
+}
+.steel {
+  background: radial-gradient(circle, #d7d7e6, #b7b7ce);
+}
+
+.fairy {
+  background: radial-gradient(circle, #f2b9cf, #d685ad);
+}
+.ice {
+  background: radial-gradient(circle, #cff3f2, #96d9d6);
+}

@@ -1,0 +1,20 @@
+.pokemonGrid {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding-inline-start: 0px;
+  margin-block: 0px;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+}
+
+.noData{
+  color: rgb(255, 77, 1);
+  text-align: center;
+  margin-bottom: 5vh;
+  font-size: 0.75rem;
+    font-family: "Press Start 2P", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
