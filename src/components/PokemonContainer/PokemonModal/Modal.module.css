@@ -20,7 +20,7 @@
   align-items: center;
   background-color: hsla(0, 0%, 100%, 0.25098039215686274);
   border-radius: 1rem;
-  width: 60vw;
+  width: 80%;
   padding: 0 2rem;
   justify-self: center;
   gap: 0.5rem;
@@ -38,7 +38,7 @@
   font-family: "Press Start 2P", monospace;
   font-weight: 400;
   font-style: normal;
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 
 .pokemonGenera {
@@ -47,29 +47,32 @@
   font-weight: 400;
   font-style: normal;
   font-size: 1.25rem;
-  width: 30vw;
+  width: 90%;
+  max-width: 225px;
   text-align: center;
   margin-top: 5px;
 }
 
 .pokemonImage {
-  width: 35vw;
+  width: 90%;
   margin: 5px;
 }
 
 .dataTypeContainer {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
 }
 
 .dataTypeContainer img {
-  width: 12vw;
-  border-radius: 100%;
+  width: 2.5rem;
+  border-radius: 50%;
 }
 
 .typeBg {
-  width: 12vw;
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -78,8 +81,8 @@
 .dimensionsContainer {
   display: flex;
   flex-direction: column;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   font-family: "VT323", monospace;
   font-size: 1.2rem;
 }
@@ -98,7 +101,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 15px;
-  width: 60vw;
+  width: 80%;
   padding: 0 2rem;
   justify-self: center;
   gap: 0.5rem;
@@ -113,9 +116,10 @@
 .aboutDesc {
   background-color: hsla(0, 0%, 100%, 0.25098039215686274);
   border-radius: 1rem;
-  width: 60vw;
+  width: 100%;
   padding: 0.6rem 2rem;
   font-size: 21px;
+  text-align: center;
 }
 
 .abilitiesContainer {
@@ -124,11 +128,12 @@
   justify-content: center;
   align-items: center;
   border-radius: 15px;
-  width: 60vw;
+  width: 80%;
   padding: 0 2rem;
   justify-self: center;
   gap: 0.5rem;
   margin-top: 3rem;
+  white-space: nowrap;
 }
 
 .abilitiesTitle {
@@ -139,13 +144,14 @@
 .abilitiesDesc {
   background-color: hsla(0, 0%, 100%, 0.25098039215686274);
   border-radius: 1rem;
-  width: 60vw;
+  width: 100%;
   padding: 0.6rem 2rem;
   font-size: 21px;
   display: flex;
   gap: 1rem;
-  padding: 1.2rem 0.1rem;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ability span {
@@ -158,7 +164,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 15px;
-  width: 60vw;
+  width: 80%;
   padding: 0 2rem;
   justify-self: center;
   gap: 0.5rem;
@@ -168,12 +174,13 @@
 .statsTitle {
   font-weight: 800;
   font-size: 2rem;
+  white-space: nowrap;
 }
 
 .statsDesc {
   background-color: hsla(0, 0%, 100%, 0.25098039215686274);
   border-radius: 1rem;
-  width: 60vw;
+  width: 100%;
   padding: 0.6rem 2rem;
   font-size: 21px;
 }
@@ -184,6 +191,7 @@
   justify-content: center;
   align-items: center;
   justify-self: center;
+  white-space: nowrap;
 }
 
 .stat {
@@ -305,4 +313,28 @@
 }
 .ice {
   background: radial-gradient(circle, #cff3f2, #96d9d6);
+}
+
+@media (min-width: 900px) {
+  .aboutContainer {
+    margin-top: 0;
+  }
+
+  .abilitiesContainer,
+  .statsContainer,
+  .evolutionContainer {
+    margin-top: 1rem;
+  }
+
+  .statsDesc {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .stat {
+    font-size: 1rem;
+  }
 }
