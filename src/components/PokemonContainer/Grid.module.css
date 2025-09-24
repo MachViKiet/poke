@@ -7,14 +7,15 @@
   align-items: center;
   justify-content: center;
   opacity: 1;
+  gap: 2rem;
 }
 
-.noData{
+.noData {
   color: rgb(255, 77, 1);
   text-align: center;
   margin-bottom: 5vh;
   font-size: 0.75rem;
-    font-family: "Press Start 2P", monospace;
+  font-family: "Press Start 2P", monospace;
   font-weight: 400;
   font-style: normal;
 }
