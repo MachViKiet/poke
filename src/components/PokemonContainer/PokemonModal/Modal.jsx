@@ -31,6 +31,7 @@ const PokemonModal = ({
         "& .MuiDialog-paper": {
           width: "50%",
           maxWidth: "1200px",
+          borderRadius: "10px",
         },
       }}
     >
@@ -39,19 +40,22 @@ const PokemonModal = ({
         style={getCardGradient(primaryType, secondaryType)}
       >
         <Stack
-          direction={{ xs: "column", md: "row" }}
+          direction={{ xs: "column", lg: "row" }}
           spacing={{ xs: 2, md: 3 }}
-          alignItems="flex-start"
+          alignItems="stretch"
         >
           <Box
             className="details-left-column"
-            sx={{ width: { xs: "100%", md: "300px" }, textAlign: "center" }}
+            sx={{
+              width: { xs: "100%", lg: "300px" },
+              textAlign: "center",
+            }}
           >
             <PokemonInfo pokemon={pokemon} pokemonSpecie={pokemonSpecie} />
           </Box>
           <Box
             className="details-right-column"
-            sx={{ flexGrow: 1, width: "100%" }}
+            sx={{ flexGrow: 1, width: { xs: "100%", lg: "300px" } }}
           >
             <PokemonAbout pokemonSpecie={pokemonSpecie} />
             <PokemonAbilities pokemon={pokemon} />
