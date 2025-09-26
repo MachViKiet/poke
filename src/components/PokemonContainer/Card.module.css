@@ -5,7 +5,7 @@
     var(--c2, #e7d9ff) 100%
   );
   min-width: 200px;
-  height: 250px;
+  height: 280px;
   margin: 1.25rem 0.75rem;
   padding: 1.25rem 0;
   display: flex;
@@ -61,8 +61,8 @@
 }
 
 .cardNumber p {
-    font-size: 1.75rem;
-    margin: 0;
+  font-size: 1.75rem;
+  margin: 0;
 }
 
 .pokemonIcon {
@@ -86,8 +86,8 @@
 }
 
 .pokemonImage {
-  width: 90px;
-  height: 90px;
+  width: 8rem;
+  height: 8rem;
 }
 
 .typeImage {
@@ -171,4 +171,11 @@
 }
 .ice {
   background: radial-gradient(circle, #cff3f2, #96d9d6);
+}
+
+@media (min-width: 900px) {
+  .pokemonCard {
+    min-width: 300px;
+    height: 280px;
+  }
 }
