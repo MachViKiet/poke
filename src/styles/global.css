@@ -2,18 +2,31 @@
 :root{
   --radius-lg: 24px;
   --shadow-lg: 0 12px 30px rgba(0,0,0,.15);
-  --glass: rgba(255,255,255,.6);
+  
+  --bg: #f6f6f6;
+  --text: #222;
+  --glass: rgba(255, 255, 255, .6);
+  --pattern1: #0001;
+  --pattern2: #0001;
+}
+
+[data-theme="dark"] {
+  --bg: #0f1720;
+  --text: #e6eef8;
+  --glass: rgba(0, 0, 0, .35);
+  --pattern1: #ffffff0d; /* um cinza claro bem suave */
+  --pattern2: #ffffff0d;
 }
 
 html,body,#root{height:100%}
 body{
   margin:0;
   font-family: Inter, system-ui, Arial, sans-serif;
-  color:#222;
+  color:var(--text);
   background:
     radial-gradient(#0001 1px, transparent 4px) 0 0/6px 6px,
     radial-gradient(#0001 1px, transparent 1px) 3px 3px/6px 6px,
-    #f6f6f6;
+    var(--bg);
 }
 
 .h-pixel{ font-family: "Press Start 2P", monospace; letter-spacing:1px; }

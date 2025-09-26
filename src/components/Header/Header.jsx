@@ -1,8 +1,9 @@
 import styles from "./Header.module.css";
 import { useState } from "react";
+import { useTheme } from "../Theme/Theme";
 
 const Header = () => {
-  const [on, setOn] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className={styles.header}>
@@ -15,14 +16,14 @@ const Header = () => {
           <input
             type="checkbox"
             id="themeSwitch"
-            checked={on}
-            onChange={() => setOn((value) => !value)}
+            checked={theme === "dark"}
+            onChange={toggleTheme}
             className={styles.input}
           />
           <span className={styles.track}></span>
           <span className={styles.thumb}>
             <img
-              src={on ? "/moon.png" : "/sun.png"}
+              src={theme === "dark" ? "/moon.png" : "/sun.png"}
               alt=""
               width="70%"
               height="70%"
