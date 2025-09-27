@@ -1,18 +1,12 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useContext } from "react";
+import { useProvideTheme } from "../../hooks/useProvideTheme"; 
 
 const ThemeContext = createContext({ theme: "light", toggleTheme: () => {} });
 
+export const useTheme = () => useContext(ThemeContext);
+
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || "light";
-  });
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => setTheme((p) => (p === "light" ? "dark" : "light"));
+  const { theme, toggleTheme } = useProvideTheme();
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -20,7 +14,3 @@ export const ThemeProvider = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
-
-export const useTheme = () => useContext(ThemeContext);
-
-export default ThemeProvider;
