@@ -26,5 +26,5 @@
 
 
 .githubIcon svg{
-  color: black;
+  color: var(--text);
 }

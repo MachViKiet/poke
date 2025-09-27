@@ -1,5 +1,11 @@
 .dialog {
-  background-color: rgb(255, 255, 255);
+  background-color: var(--glass);
+  color: var(--text);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .dialogContent {
