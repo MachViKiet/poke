@@ -1,118 +1,40 @@
-# Pokédex React Project
+# Pokédex React App
 
-## Project Overview
+<p align="center">
+  A modern, responsive, and feature-rich Pokédex application built with React, Vite, and Material-UI.
+</p>
 
-This is a collaborative React project to build a Pokédex app. The app displays a list of Pokémon, allows filtering by region, type, and sorting, and includes a search bar. Users can view details for each Pokémon in a modal.
+<h2 align="center">
+  <strong><a href="https://pokedex-react-mui-beta.vercel.app/" target="_blank"> View Live Demo</a></strong>
+<h2>
 
-## Technologies Used
+<p align="center">
+  <img src="./public/pokedex-gif.gif" alt="Demonstração do Projeto" />
+</p>
 
-- React 19
-- Vite
-- Material UI (`@mui/material`)
-- Axios (API requests)
-- CSS Modules
-- PokéAPI (https://pokeapi.co/)
+##  Overview
 
-## Folder Structure
+This project is a fully functional Pokédex that allows users to browse, search, and filter Pokémon from different regions. It features a clean, modern interface with both light and dark themes, and is optimized for performance and a great user experience on all devices. This was developed as a project to practice advanced React concepts, state management, and modern CSS techniques.
 
-```
-src/
-  components/
-    Header/
-    Footer/
-    Filters/
-      Region.jsx
-      Type.jsx
-      SortBy.jsx
-      SearchBar.jsx
-    PokemonContainer/
-      Grid.jsx
-      Card.jsx
-      PokemonModal/
-      Loading.jsx
-  hooks/
-    useFilters.js
-    useRegions.js
-    useTypes.js
-    usePokemons.js
-    useFilteredPokemons.js
-  pages/
-    Home.jsx
-  utils/
-    pokemonUtils.js
-  App.jsx
-```
+##  Features
 
-## How to Collaborate
+- **Pokémon Grid:** Displays Pokémon with a staggered "fade-in" animation.
+- **Lazy Loading:** Images are lazy-loaded to ensure fast initial page load and optimal performance.
+- **Filtering:** Filter Pokémon by region (Kanto, Johto, etc.) and sort them by ID or name.
+- **Detailed Modal:** Click on any Pokémon to see a detailed view with stats, abilities, and evolution chain.
+- **Responsive Design:** Fully fluid layout that works seamlessly on mobile, tablet, and desktop.
+- **Theme Switching:** Toggle between a beautiful light and dark mode. Your preference is saved in `localStorage`!
 
-1. **Branching:**
+##  Tech Stack
 
-   - Always create a new branch for your feature or fix.
-   - Use `git pull origin main` before starting work and before pushing.
-   - Push your changes to the remote branch and open a Pull Request for review.
+- **Framework:** [React](https://reactjs.org/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **UI Library:** [Material-UI (MUI)](https://mui.com/)
+- **Styling:** CSS Modules
+- **Data Fetching:** Native Fetch API
+- **API:** [PokéAPI](https://pokeapi.co/)
 
-2. **Component Development:**
+##  Authors
 
-   - Each developer should focus on a different component (e.g., Header, Filters, Grid, Footer).
-   - Avoid working on the same file at the same time to prevent merge conflicts.
-   - Communicate with your teammate if you need to change a shared component.
-
-3. **Project Structure:**
-
-   - The main page is `Home.jsx`, which imports and renders all main components.
-   - `App.jsx` only renders the `Home` component.
-   - Filters and SearchBar are grouped inside the `Filters` component.
-   - The Pokémon list is managed by `Grid.jsx`, which renders multiple `Card.jsx` components.
-   - Each card has a button to show details using the modal component.
-
-4. **Styling:**
-
-   - Use CSS Modules for component styles (e.g., `Header.module.css`).
-   - Keep styles for related components in the same folder.
-
-5. **Mobile-First Approach:**
-
-   - Write CSS for mobile screens first.
-   - Use media queries to adapt for larger screens.
-
-6. **Version Control Best Practices:**
-   - Commit frequently with clear messages.
-   - Pull before pushing to avoid conflicts.
-   - Resolve merge conflicts promptly.
-
-## Getting Started
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Start the development server:
-   ```bash
-   npm run dev
-   ```
-3. Open the app in your browser at `http://localhost:3000` (or the port shown in the terminal).
-
-## API Usage
-
-- Data is fetched from [PokéAPI](https://pokeapi.co/api/v2/pokemon).
-- Axios is used for API requests inside React hooks.
-
-## Contribution Guidelines
-
-- Communicate with your teammate about what you are working on.
-- Review each other's code before merging.
-- Update the README if you add new features or change the structure.
-
-## Troubleshooting
-
-- If you get a `non-fast-forward` error when pushing, run:
-  ```bash
-  git pull origin main
-  # Resolve any conflicts, then
-  git push origin main
-  ```
-- If you see swap files or merge messages, make sure to finish or abort any pending merges.
-
-## License
-
-MIT
+- **[Thiago Sampaio](https://github.com/thiagosampaiog)**
+- **[Bruno Gomes](https://github.com/brunocmg)**
