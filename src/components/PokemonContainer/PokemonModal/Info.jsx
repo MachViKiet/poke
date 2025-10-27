@@ -9,7 +9,7 @@ const PokemonInfo = ({ pokemonSpecie, pokemon }) => {
         <div className={styles.infoContainer}>
             <div className={styles.pokemonId}>#{pokemon.id.toString().padStart(3, "0")}</div>
             <div className={styles.pokemonName}>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</div>
-            <div className={styles.pokemonGenera} style={{ backgroundColor: getTypeSolidColor(primaryType)}}>{pokemonSpecie.genera.find(g => g.language.name === "en")?.genus}</div>
+            <div className={styles.pokemonGenera} style={{ backgroundColor: getTypeSolidColor(primaryType)}}>{pokemonSpecie?.genera?.find(g => g.language.name === "en")?.genus}</div>
             <div>
                 <img className={styles.pokemonImage} src={pokemon.sprites.other["dream_world"].front_default} alt={pokemon.name}></img>
             </div>

@@ -6,6 +6,7 @@ import styles from "./Home.module.css"
 import useRegions from '../hooks/useRegions'
 import useTypes from "../hooks/useTypes"
 import useFilters from "../hooks/useFilters"
+import { Home as HomeTemplate } from "../templates/Home"
 
 const Home = () => {
 
@@ -16,10 +17,15 @@ const Home = () => {
 
   return (
     <div className={styles.appContainer}>
-      <Header />
+      {/* <Header />
       <Filters filters={filters} setFilters={setFilters} regions={regions} types={types} />
       <PokemonGrid filters={filters} />
-      <Footer />
+      <Footer /> */}
+
+      <HomeTemplate>
+        <Filters filters={filters} setFilters={setFilters} regions={regions} types={types} />
+        <PokemonGrid filters={filters} />
+      </HomeTemplate>
     </div>
   );
 };

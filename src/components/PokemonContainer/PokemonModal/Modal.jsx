@@ -13,13 +13,33 @@ import { getCardGradient } from "../../../utils/typeColorUtils";
 const PokemonModal = ({
   open,
   setOpen,
-  pokemon,
-  pokemonSpecie,
-  pokemons,
-  pokemonEvolution,
+  // pokemon,
+  // pokemonSpecie = null,
+  pokemon_data,
+  loading = false,
+  // pokemons,
+  // pokemonEvolution,
 }) => {
-  const primaryType = pokemon.types?.[0]?.type?.name ?? "normal";
-  const secondaryType = pokemon.types?.[1]?.type?.name ?? primaryType;
+  let primaryType = "normal"; 
+  let secondaryType = "normal";
+  if(loading){
+    return (
+      <Dialog
+        className={styles.dialog} 
+      >
+        <DialogContent>
+          Loading
+        </DialogContent>
+      </Dialog>         
+    )
+  }
+
+  if (pokemon_data != null){
+    primaryType =  pokemon_data?.details.types?.[0]?.type?.name ?? "normal";
+    secondaryType = pokemon_data?.details.types?.[1]?.type?.name ?? primaryType;
+  }
+
+  console.log('Modal pokemon:', pokemon_data);
 
   return (
     <Dialog
@@ -44,6 +64,7 @@ const PokemonModal = ({
           spacing={{ xs: 2, md: 3 }}
           alignItems="stretch"
         >
+          { pokemon_data == null ?  "Loading": <> 
           <Box
             className="details-left-column"
             sx={{
@@ -51,20 +72,21 @@ const PokemonModal = ({
               textAlign: "center",
             }}
           >
-            <PokemonInfo pokemon={pokemon} pokemonSpecie={pokemonSpecie} />
+            <PokemonInfo pokemon={pokemon_data.details} pokemonSpecie={pokemon_data.specie} />
           </Box>
           <Box
             className="details-right-column"
             sx={{ flexGrow: 1, width: { xs: "100%", lg: "300px" } }}
           >
-            <PokemonAbout pokemonSpecie={pokemonSpecie} />
-            <PokemonAbilities pokemon={pokemon} />
-            <PokemonStats pokemon={pokemon} />
-            <PokemonEvolution
+            <PokemonAbout pokemonSpecie={pokemon_data.specie} />
+            <PokemonAbilities pokemon={pokemon_data.details} />
+            <PokemonStats pokemon={pokemon_data.details} />
+            {/* <PokemonEvolution
               pokemons={pokemons}
               pokemonEvolution={pokemonEvolution}
-            />
-          </Box>
+            /> */}
+          </Box> 
+          </>}
         </Stack>
       </DialogContent>
     </Dialog>
