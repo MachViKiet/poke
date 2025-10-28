@@ -1,4 +1,4 @@
-import { FETCH_POKEMON_FAILURE, FETCH_POKEMON_REQUEST, FETCH_POKEMON_SUCCESS, SELECT_POKEMON } from "./actions";
+import { ADD_NEW_POKEMON, ADD_MORE_POKEMON_REQUEST, FETCH_POKEMON_FAILURE, FETCH_POKEMON_REQUEST, FETCH_POKEMON_SUCCESS, POKEMON_SUCCESS, SELECT_POKEMON } from "./actions";
 
 const initialState = {
   data: null,
@@ -16,6 +16,25 @@ const pokemonsReducer = (state = initialState, action) => {
         loading: true,
         data: null,
         success: false,
+        error: null
+      };
+    case ADD_MORE_POKEMON_REQUEST:
+      return {
+        ...state, 
+        loading: true,
+        success: false,
+        error: null
+      };
+    case ADD_NEW_POKEMON:
+      return {
+        ...state, 
+        data: [ ...state.data, ...action.payload ],
+      };
+    case POKEMON_SUCCESS:
+      return {
+        ...state, 
+        loading: false,
+        success: true,
         error: null
       };
     case FETCH_POKEMON_SUCCESS:

@@ -5,6 +5,9 @@ export const FETCH_POKEMON_REQUEST = "FETCH_POKEMON_REQUEST";
 export const FETCH_POKEMON_SUCCESS = "FETCH_POKEMON_SUCCESS";
 export const FETCH_POKEMON_FAILURE = "FETCH_POKEMON_FAILURE";
 export const SELECT_POKEMON = "SELECT_POKEMON";
+export const POKEMON_SUCCESS = "POKEMON_SUCCESS";
+export const ADD_NEW_POKEMON = "ADD_NEW_POKEMON";
+export const ADD_MORE_POKEMON_REQUEST = "ADD_POKEMON_REQUEST";
 
 export const getNumberOfPages = (count) => Math.ceil(count / 20);
 
@@ -15,19 +18,24 @@ export const selectPokemon = (pokemon) => {
 
 }
 
-export const fetchPokemons = () => {
+export const fetchPokemons = (api = null) => {
+  const API = api ? api : `https://pokeapi.co/api/v2/pokemon?limit=20`;
+  
   return async dispatch => {
     dispatch({ type: FETCH_POKEMON_REQUEST });
 
     try {
-      const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=20`);
+      const { data } = await axios.get(API);
       dispatch({
         type: FETCH_POKEMON_SUCCESS,
         payload: {
           list: data.results,
           count: data.count,
+          next: data.next,
+          previous: data.previous
         },
       });
+      console.log(data)
     } catch (error) {
       dispatch({
         type: FETCH_POKEMON_FAILURE,
