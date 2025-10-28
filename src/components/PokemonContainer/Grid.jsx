@@ -140,7 +140,7 @@ import styles from "./Grid.module.css";
 import PokemonCard from "./Card";
 import { fetchPokemons, selectPokemon } from '../../redux/pokemons/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPokemonDetails_all } from '../../redux/pokemonDetails/actions';
+import { fetchPokemonDetails, fetchPokemonDetails_all } from '../../redux/pokemonDetails/actions';
 import { fetchPokemonSpecies_all } from '../../redux/pokemonSpecies/actions';
 import { Box, Button } from "@mui/material";
 
@@ -166,30 +166,47 @@ function PokemonGrid({setMessages}) {
   useEffect(() => {
     // Fetch or load your pokemon list here and update the state    
     if (!pokemon_list?.list) { 
+      console.log('load lai data')
       dispatch(fetchPokemons())
     }
   }, [dispatch, pokemon_list]);
 
   useEffect(() => {
     if (selectedPokemon) {
-      const isValid = pokemon_list && pokemon_list.list.some(item => {
+
+      let isValid = pokemon_list && pokemon_list.list.some(item => {
         return selectedPokemon?.name ? item.name.toLowerCase().includes(selectedPokemon?.name)
           : item.name.toLowerCase().includes(selectedPokemon);
       });
-      console.log(isValid)
-      if(!isValid) {
-        setMessages({
-          severity: 'error',
-          text: 'Không tìm thấy Pokemon bạn cần !!'
-        })
-        dispatch(selectPokemon(null));
+
+      if(isValid) {
+        setOpen(true);
         return
       }
-        
-      setOpen(true);
+
+      if(pokemonDetail_data && pokemonDetail_data[selectedPokemon]) {
+        console.log('search', pokemonDetail_data[selectedPokemon], pokemonSpecies_data[selectedPokemon])
+        set_pokemon_list(prev => ({
+          ...prev, 
+          list: [...prev.list, {
+            name: selectedPokemon?.name ? selectedPokemon?.name : selectedPokemon,
+            details: pokemonDetail_data[selectedPokemon],
+            species: pokemonSpecies_data[selectedPokemon],
+          }],
+        }))
+        setOpen(true);
+        return
+      }
+
+      setMessages({
+        severity: 'error',
+        text: 'Không tìm thấy Pokemon bạn cần !!'
+      })
+      dispatch(selectPokemon(null));
+      return
     }
     
-  }, [dispatch, pokemon_list, selectedPokemon, setMessages]);
+  }, [dispatch, pokemonDetail_data, pokemonSpecies_data, pokemon_list, selectedPokemon, setMessages]);
 
   useEffect(() => {
     if (pokemon_data && pokemon_data.list) {
@@ -261,21 +278,36 @@ function PokemonGrid({setMessages}) {
     console.log('Current pokemon_list state:', pokemon_list);
   }, [pokemon_list]);
 
+  useEffect(() => {
+    console.log('Current pokemonDetail_data state:', pokemonDetail_data);
+  }, [pokemonDetail_data]);
+
 
 
   const openDetail = async (pokemon) => {
-    // setSelectedPokemon(pokemon_name);
     dispatch(selectPokemon(pokemon));
   }
 
   const closeDetail = async () => {
-    // setSelectedPokemon(pokemon_name);
     dispatch(selectPokemon(null));
     setOpen(false)
   }
 
   if (pokemon_list.loading) 
     return <div className={styles.noData}>Loading ... </div>;
+
+  const direction = (url) => {
+    if(url) {
+      dispatch(fetchPokemons(url)).then(() => {
+        set_pokemon_list(prev => ({
+          ...prev,
+          isDetail: false,
+          isSpecies: false,
+          loading: false,
+        }))
+      })
+    }
+  }
 
   return (
     <div>
@@ -300,7 +332,7 @@ function PokemonGrid({setMessages}) {
 
 
       {open && selectedPokemon && (
-        <Suspense fallback={<div>Carregando...</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
           <PokemonModal
             open={open}
             onClose={closeDetail}
@@ -312,24 +344,10 @@ function PokemonGrid({setMessages}) {
           />
         </Suspense>
       )}
-  {/* const [pokemon_list, set_pokemon_list] = React.useState({
-    list: null,
-    isDetail: false,
-    isSpecies: false,
-    loading: false,
-  }) */}
-      <Box
-        onClick = {() => {
-          set_pokemon_list({
-            list: null,
-            isDetail: false,
-            isSpecies: false,
-            loading: false,
-          })
-          dispatch(fetchPokemons(pokemon_list.next))
-        }} 
-        sx = {{ width: '100%', display: 'flex', justifyContent: 'center', padding: '10px 0' }}>
-        <Button variant="contained">Add More</Button>
+
+      <Box sx = {{ width: '100%', display: 'flex', justifyContent: 'center', padding: '10px 0', gap: '40px' }}>
+        <Button disabled={pokemon_list.previous == null} variant="contained" onClick={() => direction(pokemon_list.previous)} >Back</Button>
+        <Button disabled={pokemon_list.next == null} variant="contained" onClick={() => direction(pokemon_list.next)} >Next</Button>
       </Box>
     </div>
   )

@@ -8,6 +8,7 @@ export const SELECT_POKEMON = "SELECT_POKEMON";
 export const POKEMON_SUCCESS = "POKEMON_SUCCESS";
 export const ADD_NEW_POKEMON = "ADD_NEW_POKEMON";
 export const ADD_MORE_POKEMON_REQUEST = "ADD_POKEMON_REQUEST";
+export const SEARCH_POKEMON = "SEARCH_POKEMON";
 
 export const getNumberOfPages = (count) => Math.ceil(count / 20);
 
@@ -19,7 +20,7 @@ export const selectPokemon = (pokemon) => {
 }
 
 export const fetchPokemons = (api = null) => {
-  const API = api ? api : `https://pokeapi.co/api/v2/pokemon?limit=20`;
+  const API = api ? api : `https://pokeapi.co/api/v2/pokemon?limit=3`;
   
   return async dispatch => {
     dispatch({ type: FETCH_POKEMON_REQUEST });
@@ -35,7 +36,7 @@ export const fetchPokemons = (api = null) => {
           previous: data.previous
         },
       });
-      console.log(data)
+      console.log('LoadData: ', data)
     } catch (error) {
       dispatch({
         type: FETCH_POKEMON_FAILURE,

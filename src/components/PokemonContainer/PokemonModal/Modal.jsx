@@ -9,6 +9,12 @@ import PokemonAbout from "./About";
 import PokemonInfo from "./Info";
 import styles from "./Modal.module.css";
 import { getCardGradient } from "../../../utils/typeColorUtils";
+import { IconButton } from "@mui/material";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useDispatch, useSelector } from "react-redux";
+import { addPokemonFavorite } from "../../../redux/pokemonFavorites/actions";
+import { useEffect } from "react";
 
 const PokemonModal = ({
   open,
@@ -23,6 +29,14 @@ const PokemonModal = ({
 }) => {
   let primaryType = "normal"; 
   let secondaryType = "normal";
+
+   const {data: pokemon_favorite_data } = useSelector((state) => state.pokemonFavoritesReducer);
+
+   useEffect(() => {
+    console.log(pokemon_favorite_data)
+   }, [pokemon_favorite_data])
+  const dispatch = useDispatch();
+
   if(loading){
     return (
       <Dialog
@@ -40,7 +54,20 @@ const PokemonModal = ({
     secondaryType = pokemon_data?.details.types?.[1]?.type?.name ?? primaryType;
   }
 
-  console.log('Modal pokemon:', pokemon_data);
+  const checkPokemonExists = (list, name) => {
+    const lowerCaseName = name.toLowerCase();
+
+    return list.some(item => {
+        // Kiểm tra thuộc tính 'pokemon_name' bên trong 'payload'
+        const pokemonNameInPayload = item && item.pokemon_name;
+
+        if (pokemonNameInPayload) {
+            // Chuyển sang chữ thường để so sánh không phân biệt hoa/thường
+            return pokemonNameInPayload.toLowerCase() === lowerCaseName;
+        }
+        return false;
+    });
+};
 
   return (
     <Dialog
@@ -82,6 +109,20 @@ const PokemonModal = ({
             <PokemonAbout pokemonSpecie={pokemon_data.specie} />
             <PokemonAbilities pokemon={pokemon_data.details} />
             <PokemonStats pokemon={pokemon_data.details} />
+
+            <Box sx = {{ width: '100%', display: 'flex', paddingTop: '20px', justifyContent: 'center' }}>
+              <IconButton aria-label="delete" size="small"
+                onClick={() => { 
+                  console.log('click')
+                  dispatch(addPokemonFavorite(pokemon_data)) 
+                }}
+              >
+                { pokemon_favorite_data && checkPokemonExists(pokemon_favorite_data, pokemon_data.pokemon_name)
+                    ?  <FavoriteIcon sx={{ color: 'red' }} fontSize="inherit" /> :
+                    <FavoriteBorderIcon fontSize="inherit" />
+                }
+              </IconButton>
+            </Box>
             {/* <PokemonEvolution
               pokemons={pokemons}
               pokemonEvolution={pokemonEvolution}
