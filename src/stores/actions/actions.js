@@ -5,6 +5,7 @@ axios.defaults.baseURL = 'https://pokeapi.co/api/v2/';
 export const LOAD_POKEMON_LIST = "LOAD_POKEMON_LIST";
 export const LOAD_POKEMON_DETAILS = "LOAD_POKEMON_DETAILS";
 export const LOAD_POKEMON_SPECIES = "LOAD_POKEMON_SPECIES";
+export const TARGETED_POKEMON = "TARGETED_POKEMON";
 
 export const getNumberOfPages = (count) => Math.ceil(count / 20);
 
@@ -74,3 +75,10 @@ export const load_pokemon_species = async (name = null) => {
     };
   });
 };
+
+export const tagetedPokemon = (pokemon) => {
+  return {
+    type: 'TARGETED_POKEMON',
+    payload: pokemon
+  };
+}

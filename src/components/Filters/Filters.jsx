@@ -4,27 +4,10 @@ import SortByFilter from "./SortBy";
 import TypeFilter from "./Type";
 import styles from "./Filters.module.css"
 
-const Filters = ({ filters, setFilters }) => {
+const Filters = ({setMessages}) => {
     return (
         <div className={styles.filters + " scroll-bar"}>
-            {/* <RegionFilter  
-            setFilters={setFilters} 
-            regions={regions} 
-            filters={filters} 
-            />
-            <SortByFilter 
-            setFilters={setFilters} 
-            filters={filters} 
-            />
-            <TypeFilter  
-            setFilters={setFilters}
-            filters={filters}
-            types={types}
-            /> */}
-            <SearchBarFilter  
-            setFilters={setFilters}
-            filters={filters} 
-            />
+            <SearchBarFilter setMessages = {setMessages} />
         </div>
     )
 }

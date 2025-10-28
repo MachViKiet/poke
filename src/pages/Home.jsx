@@ -1,31 +1,24 @@
 import Filters from "../components/Filters/Filters";
-import Header from "../components/Header/Header";
 import PokemonGrid from "../components/PokemonContainer/Grid";
-import Footer from "../components/Footer/Footer"
 import styles from "./Home.module.css"
-import useRegions from '../hooks/useRegions'
-import useTypes from "../hooks/useTypes"
-import useFilters from "../hooks/useFilters"
 import { Home as HomeTemplate } from "../templates/Home"
+import { useState } from "react";
+import { Alert } from "@mui/material";
+import Messageblock from "../components/Messageblock";
 
 const Home = () => {
 
-  const { filters, setFilters } = useFilters();
-  const { regions } = useRegions();
-  const { types } = useTypes();
-
-
+  const [messages, setMessages] = useState(null);
+  
   return (
     <div className={styles.appContainer}>
-      {/* <Header />
-      <Filters filters={filters} setFilters={setFilters} regions={regions} types={types} />
-      <PokemonGrid filters={filters} />
-      <Footer /> */}
-
       <HomeTemplate>
-        <Filters filters={filters} setFilters={setFilters} regions={regions} types={types} />
-        <PokemonGrid filters={filters} />
+        <Filters setMessages={setMessages} />
+        <PokemonGrid setMessages = {setMessages} />
       </HomeTemplate>
+
+      <Messageblock messages = {messages} setMessages = {setMessages}/>
+
     </div>
   );
 };

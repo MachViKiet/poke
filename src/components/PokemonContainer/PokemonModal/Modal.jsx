@@ -12,7 +12,8 @@ import { getCardGradient } from "../../../utils/typeColorUtils";
 
 const PokemonModal = ({
   open,
-  setOpen,
+  // setOpen,
+  onClose,
   // pokemon,
   // pokemonSpecie = null,
   pokemon_data,
@@ -45,7 +46,7 @@ const PokemonModal = ({
     <Dialog
       className={styles.dialog}
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={onClose}
       maxWidth={false}
       sx={{
         "& .MuiDialog-paper": {

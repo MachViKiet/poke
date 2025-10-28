@@ -1,9 +1,10 @@
-import { LOAD_POKEMON_DETAILS, LOAD_POKEMON_LIST, LOAD_POKEMON_SPECIES} from "../actions/actions";
+import { LOAD_POKEMON_DETAILS, LOAD_POKEMON_LIST, LOAD_POKEMON_SPECIES, TARGETED_POKEMON} from "../actions/actions";
 
 const initialState = {
-  pokemons: null,
+  data: null,
   details: null,
   species: null,
+  targeted: null,
 };
 
 const reducers = (state = initialState, action) => {
@@ -22,6 +23,12 @@ const reducers = (state = initialState, action) => {
       return {
         ...state, 
         species: {...state.details, [action.payload.name]: action.payload.data},
+      };
+
+    case TARGETED_POKEMON: 
+      return {
+        ...state, 
+        targeted: action.payload,
       };
     
     default:
