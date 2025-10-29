@@ -181,25 +181,34 @@
 // export default SearchBarFilter;
  
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Autocomplete, TextField, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPokemon } from '../../redux/pokemons/actions';
+import useDebounce from '../../hooks/useDebounce';
 
 
-const DEBOUNCE_DELAY = 500;
+const DEBOUNCE_DELAY = 1000;
 const SearchBarFilter = () => {
   const [searchValue, setSearchValue] = useState(null);
-  const [pokemonList, setPokemonList] = useState(null)
+  const [pokemonList, setPokemonList] = useState(null);
+  const [inputValue, setInputValue] = useState('');
 
   const { loading: pokemon_loading, data: pokemon_data } = useSelector((state) => state.pokemonsReducer);
 
   const dispatch = useDispatch();
+  
+  // Debounce input value sau 500ms
+  const debouncedInputValue = useDebounce(inputValue, DEBOUNCE_DELAY);
  
   const handleChange = (event, newValue) => {
     setSearchValue(newValue);
     console.log("Bạn đã chọn:", newValue);
+  };
+
+  const handleInputChange = (event, newInputValue) => {
+    setInputValue(newInputValue);
   };
 
   useEffect(() => {
@@ -209,18 +218,13 @@ const SearchBarFilter = () => {
 
   }, [pokemonList, pokemon_data])
 
-  // Xử lý khi nhấn phím Enter (không debounce, thực hiện ngay)
-  const handleKeyDown = useCallback((event) => {
-      if (event.key === 'Enter') {
-          event.preventDefault(); 
-          const finalValueName = event.target.value; 
-
-          if (finalValueName) {
-              console.log('Giá trị tìm kiếm cuối cùng (Enter):', finalValueName);
-              dispatch(selectPokemon(finalValueName));
-          }
-      }
-  }, [dispatch]);
+  // Xử lý debounced input value sau 500ms
+  useEffect(() => {
+    if (debouncedInputValue && debouncedInputValue.trim()) {
+      console.log('Giá trị tìm kiếm cuối cùng (debounced):', debouncedInputValue);
+      dispatch(selectPokemon(debouncedInputValue));
+    }
+  }, [debouncedInputValue, dispatch]);
 
 
   if (pokemon_loading) return <div>Loading...</div>;
@@ -234,7 +238,7 @@ const SearchBarFilter = () => {
         
         value={searchValue}
         onChange={handleChange}
-        onInputChange={() => {}}
+        onInputChange={handleInputChange}
         
         renderInput={(params) => (
           <TextField
@@ -242,7 +246,6 @@ const SearchBarFilter = () => {
             label="Tìm kiếm hoặc Chọn..."
             variant="outlined"
             size="small"
-            onKeyDown={handleKeyDown}
             InputProps={{
               ...params.InputProps,
               startAdornment: (
