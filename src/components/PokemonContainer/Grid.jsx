@@ -175,8 +175,8 @@ function PokemonGrid({setMessages}) {
     if (selectedPokemon) {
 
       let isValid = pokemon_list && pokemon_list.list.some(item => {
-        return selectedPokemon?.name ? item.name.toLowerCase().includes(selectedPokemon?.name)
-          : item.name.toLowerCase().includes(selectedPokemon);
+        const pokemonName = selectedPokemon?.name ? selectedPokemon.name : selectedPokemon;
+        return item.name.toLowerCase() === pokemonName.toLowerCase();
       });
 
       if(isValid) {
@@ -184,14 +184,15 @@ function PokemonGrid({setMessages}) {
         return
       }
 
-      if(pokemonDetail_data && pokemonDetail_data[selectedPokemon]) {
-        console.log('search', pokemonDetail_data[selectedPokemon], pokemonSpecies_data[selectedPokemon])
+      const pokemonName = selectedPokemon?.name ? selectedPokemon.name : selectedPokemon;
+      if(pokemonDetail_data && pokemonDetail_data[pokemonName]) {
+        console.log('search', pokemonDetail_data[pokemonName], pokemonSpecies_data[pokemonName])
         set_pokemon_list(prev => ({
           ...prev, 
           list: [...prev.list, {
-            name: selectedPokemon?.name ? selectedPokemon?.name : selectedPokemon,
-            details: pokemonDetail_data[selectedPokemon],
-            species: pokemonSpecies_data[selectedPokemon],
+            name: pokemonName,
+            details: pokemonDetail_data[pokemonName],
+            species: pokemonSpecies_data[pokemonName],
           }],
         }))
         setOpen(true);
@@ -209,7 +210,8 @@ function PokemonGrid({setMessages}) {
   }, [dispatch, pokemonDetail_data, pokemonSpecies_data, pokemon_list, selectedPokemon, setMessages]);
 
   useEffect(() => {
-    if (pokemon_data && pokemon_data.list) {
+    if (pokemon_data && pokemon_data.list && pokemon_loading === false) {
+      console.log('🔄 useEffect triggered - pokemon_data changed:', pokemon_data);
       set_pokemon_list(prev => ({ ...prev, 
         list: pokemon_data.list,
         count: pokemon_data.count , 
@@ -217,10 +219,11 @@ function PokemonGrid({setMessages}) {
         previous: pokemon_data.previous , 
         loading: true }));
 
+      console.log('📡 Dispatching fetchPokemonDetails_all and fetchPokemonSpecies_all');
       dispatch(fetchPokemonDetails_all(pokemon_data.list));
       dispatch(fetchPokemonSpecies_all(pokemon_data.list));
     }
-  }, [dispatch, pokemon_data, pokemon_error, pokemon_loading]);
+  }, [dispatch, pokemon_data, pokemon_loading]);
 
   useEffect(() => { 
     if (pokemon_list.isDetail && pokemon_list.isSpecies) {
@@ -249,7 +252,7 @@ function PokemonGrid({setMessages}) {
         isDetail: true 
       }));
     }
-  }, [pokemonDetail_data, pokemonDetail_loading, pokemon_data, pokemon_list.loading, pokemon_list]);
+  }, [pokemonDetail_data, pokemonDetail_loading, pokemon_list.isDetail]);
 
 
   useEffect(() => { 
@@ -272,15 +275,8 @@ function PokemonGrid({setMessages}) {
         isSpecies: true 
       }));
     }
-  }, [pokemonSpecies_data, pokemonSpecies_loading, pokemon_data, pokemon_list.loading, pokemon_list]);
+  }, [pokemonSpecies_data, pokemonSpecies_loading, pokemon_list.isSpecies]);
 
-  useEffect(() => {
-    console.log('Current pokemon_list state:', pokemon_list);
-  }, [pokemon_list]);
-
-  useEffect(() => {
-    console.log('Current pokemonDetail_data state:', pokemonDetail_data);
-  }, [pokemonDetail_data]);
 
 
 

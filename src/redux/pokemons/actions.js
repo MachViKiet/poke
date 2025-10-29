@@ -9,6 +9,9 @@ export const POKEMON_SUCCESS = "POKEMON_SUCCESS";
 export const ADD_NEW_POKEMON = "ADD_NEW_POKEMON";
 export const ADD_MORE_POKEMON_REQUEST = "ADD_POKEMON_REQUEST";
 export const SEARCH_POKEMON = "SEARCH_POKEMON";
+export const SEARCH_POKEMON_REQUEST = "SEARCH_POKEMON_REQUEST";
+export const SEARCH_POKEMON_SUCCESS = "SEARCH_POKEMON_SUCCESS";
+export const SEARCH_POKEMON_FAILURE = "SEARCH_POKEMON_FAILURE";
 
 export const getNumberOfPages = (count) => Math.ceil(count / 20);
 
@@ -40,6 +43,66 @@ export const fetchPokemons = (api = null) => {
     } catch (error) {
       dispatch({
         type: FETCH_POKEMON_FAILURE,
+        payload: error.message,
+      });
+    }
+  };
+};
+
+// Action để search Pokemon theo tên
+export const searchPokemon = (pokemonName) => {
+  return async dispatch => {
+    dispatch({ type: SEARCH_POKEMON_REQUEST });
+    
+    try {
+      // Sử dụng API để tìm Pokemon theo tên
+      const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`);
+      
+      dispatch({
+        type: SEARCH_POKEMON_SUCCESS,
+        payload: {
+          name: data.name,
+          id: data.id,
+          sprites: data.sprites,
+          types: data.types,
+          height: data.height,
+          weight: data.weight,
+          abilities: data.abilities,
+          stats: data.stats
+        }
+      });
+      
+      console.log('Search result: ', data);
+    } catch (error) {
+      dispatch({
+        type: SEARCH_POKEMON_FAILURE,
+        payload: error.message,
+      });
+    }
+  };
+};
+
+// Action để lấy danh sách Pokemon cho gợi ý
+export const fetchPokemonSuggestions = (searchTerm) => {
+  return async dispatch => {
+    try {
+      // Lấy danh sách Pokemon lớn để có nhiều gợi ý
+      const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=1000`);
+      
+      // Lọc Pokemon theo search term
+      const filteredPokemons = data.results.filter(pokemon => 
+        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ).slice(0, 10); // Chỉ lấy 10 gợi ý đầu tiên
+      
+      dispatch({
+        type: SEARCH_POKEMON_SUCCESS,
+        payload: filteredPokemons
+      });
+      
+      console.log('Suggestions: ', filteredPokemons);
+    } catch (error) {
+      dispatch({
+        type: SEARCH_POKEMON_FAILURE,
         payload: error.message,
       });
     }

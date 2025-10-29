@@ -40,9 +40,11 @@ export const fetchPokemonDetails = (pokemon) => {
 
 export const fetchPokemonDetails_all = (pokemon_list) => {
   return async (dispatch) => {
+    console.log('🔍 fetchPokemonDetails_all called with:', pokemon_list);
     dispatch({ type: FETCH_POKEMONDETAILS_REQUEST });
     for (const pokemon of pokemon_list) {
         try {
+        console.log('📡 Fetching details for:', pokemon.name);
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
         const data = response.data;
             dispatch({

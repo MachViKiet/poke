@@ -185,7 +185,7 @@ import React, { useEffect, useState } from 'react';
 import { Autocomplete, TextField, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPokemon } from '../../redux/pokemons/actions';
+import { selectPokemon, searchPokemon, fetchPokemonSuggestions } from '../../redux/pokemons/actions';
 import useDebounce from '../../hooks/useDebounce';
 
 
@@ -195,18 +195,13 @@ const SearchBarFilter = () => {
   const [pokemonList, setPokemonList] = useState(null);
   const [inputValue, setInputValue] = useState('');
 
-  const { loading: pokemon_loading, data: pokemon_data } = useSelector((state) => state.pokemonsReducer);
+  const { loading: pokemon_loading, data: pokemon_data, searchResult, searchLoading, searchError } = useSelector((state) => state.pokemonsReducer);
 
   const dispatch = useDispatch();
   
   // Debounce input value sau 500ms
   const debouncedInputValue = useDebounce(inputValue, DEBOUNCE_DELAY);
  
-  const handleChange = (event, newValue) => {
-    setSearchValue(newValue);
-    console.log("Bạn đã chọn:", newValue);
-  };
-
   const handleInputChange = (event, newInputValue) => {
     setInputValue(newInputValue);
   };
@@ -222,28 +217,63 @@ const SearchBarFilter = () => {
   useEffect(() => {
     if (debouncedInputValue && debouncedInputValue.trim()) {
       console.log('Giá trị tìm kiếm cuối cùng (debounced):', debouncedInputValue);
-      dispatch(selectPokemon(debouncedInputValue));
+      dispatch(fetchPokemonSuggestions(debouncedInputValue));
     }
   }, [debouncedInputValue, dispatch]);
+
+  // Xử lý khi có kết quả search (gợi ý)
+  useEffect(() => {
+    if (searchResult && Array.isArray(searchResult)) {
+      console.log('Danh sách gợi ý:', searchResult);
+      // Không tự động select Pokemon, chỉ hiển thị gợi ý
+    }
+  }, [searchResult, dispatch]);
+
+  // Xử lý khi có lỗi search
+  useEffect(() => {
+    if (searchError) {
+      console.log('Lỗi search:', searchError);
+      // Có thể hiển thị thông báo lỗi cho user
+    }
+  }, [searchError]);
 
 
   if (pokemon_loading) return <div>Loading...</div>;
 
+  // Kết hợp danh sách gợi ý với danh sách Pokemon hiện có
+  const allOptions = searchResult && Array.isArray(searchResult) 
+    ? [...searchResult, ...(pokemonList?.list || [])]
+    : (pokemonList?.list || []);
+
   return (
     <Box sx={{ width: 400, margin: 4}}>
       <Autocomplete
-        options={pokemonList?.list || []}
+        options={allOptions}
         
         getOptionLabel={(option) => option.name || ""}
         
         value={searchValue}
-        onChange={handleChange}
+        onChange={(event, newValue) => {
+          setSearchValue(newValue);
+          if (newValue) {
+            console.log("Bạn đã chọn:", newValue);
+            dispatch(selectPokemon(newValue));
+          }
+        }}
         onInputChange={handleInputChange}
+        loading={searchLoading}
+        freeSolo
+        filterOptions={(options, { inputValue }) => {
+          // Tự động filter theo input
+          return options.filter(option => 
+            option.name.toLowerCase().includes(inputValue.toLowerCase())
+          );
+        }}
         
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Tìm kiếm hoặc Chọn..."
+            label={searchLoading ? "Đang tìm kiếm..." : "Tìm kiếm Pokemon..."}
             variant="outlined"
             size="small"
             InputProps={{
